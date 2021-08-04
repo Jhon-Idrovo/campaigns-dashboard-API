@@ -1,7 +1,7 @@
 export function parseRequestQuery(query) {
   const { auctionsPerPg = 20, page = 0, id, desc, name, bidGt, bidLt } = query;
 
-  let options: GetAuctionsOptionsInterface;
+  let options: GetCampaignsOptions;
   id ? (options.filters.id = id) : null;
   desc ? (options.filters.id = desc) : null;
   name ? (options.filters.name = name) : null;
@@ -9,7 +9,7 @@ export function parseRequestQuery(query) {
   bidLt ? (options.filters.bidLt = bidLt) : null;
 
   options.page = page;
-  options.auctionsPerPg = auctionsPerPg;
+  options.campaignsPerPg = auctionsPerPg;
 
   return options;
 }

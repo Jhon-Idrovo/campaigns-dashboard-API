@@ -7,8 +7,8 @@ interface AuctionsFilterInterface {
   bidGt: number;
 }
 
-interface GetAuctionsOptionsInterface {
+export declare interface GetCampaignsOptions {
   filters: AuctionsFilterInterface | null;
-  auctionsPerPg: number;
+  campaignsPerPg: number;
   page: number;
 }
