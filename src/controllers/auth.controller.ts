@@ -26,28 +26,26 @@ export async function signInHandler(
   res: Response,
   next: NextFunction
 ) {
-  try {
-    const { username, password } = req.body;
-    const user = await User.findOne({ username }).populate("roles");
-    if (user) {
-      //compare passwords
-      if (await user.comparePassword(user.password, password)) {
-        const userRoles = user.roles.map((role) => role.name);
+  const { email, password } = req.body;
+  const user = await User.findOne({ email }).populate("roles");
+  if (user) {
+    //compare passwords
+    if (await user.comparePassword(user.password, password)) {
+      const userRoles = user.roles.map((role) => role.name);
 
-        const refreshToken = generateRefreshToken(user._id, userRoles);
-        return res.status(200).json({
-          accessToken: generateAccessToken(user._id, userRoles),
-          refreshToken,
-          //this is optional, you should not rely on this to grant access because it's easy to modify
-          //use the access token payload instead
-          roles: userRoles,
-        });
-      }
-      return res.json({ error: "Invalid password", token: null });
+      const refreshToken = generateRefreshToken(user._id, userRoles);
+      return res.status(200).json({
+        accessToken: generateAccessToken(user._id, userRoles),
+        refreshToken,
+        //this is optional, you should not rely on this to grant access because it's easy to modify
+        //use the access token payload instead
+        roles: userRoles,
+      });
     }
-  } catch (error) {
-    return res.status(400).json({ error });
+    return res.status(400).json({ error: "Invalid password" });
   }
+
+  return res.status(400).json({ error: "Invalid email" });
 }
 
 /**
@@ -90,6 +88,9 @@ export async function getAccessTokenHandler(
 
 /**
  * Deletes the refresh token from the database and invalidates the access token.
+ * This method is optional since deleting the tokens on the client logs out
+ * succesfully. This method is more needed when someone steals a refresh token.
+ * In this case, the user should request the log out througth this method.
  * @param req
  * @param res
  * @param next
