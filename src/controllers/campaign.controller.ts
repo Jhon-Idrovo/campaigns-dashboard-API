@@ -37,8 +37,9 @@ export async function createOne(
   }
 }
 export async function readAll(req: Request, res: Response, next: NextFunction) {
-  const campaigns = await Campaign.find();
-  return res.json({ campaigns });
+  const campaigns = await Campaign.find().populate("client affiliates", "name");
+
+  return res.status(200).json({ campaigns });
 }
 export async function readOne(req: Request, res: Response, next: NextFunction) {
   const campaign = await Campaign.findById(req.params.campaignID);

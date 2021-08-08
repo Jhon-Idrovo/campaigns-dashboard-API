@@ -2,6 +2,7 @@ import { model, Schema } from "mongoose";
 import { IAffiliate } from "../../interfaces/affiliates";
 
 const affiliateSchema = new Schema<IAffiliate>({
+  name: String,
   campaigns: [{ type: Schema.Types.ObjectId, ref: "Campaign" }],
   paid: Number,
   reach: Number,
