@@ -62,7 +62,7 @@ export async function getAccessTokenHandler(
   res: Response,
   next: NextFunction
 ) {
-  const refreshToken = req.headers["x-refresh-token"];
+  const refreshToken = req.body.refresh;
   if (refreshToken) {
     //validate the refresh token
     //first validation
@@ -84,7 +84,7 @@ export async function getAccessTokenHandler(
         });
       }
     }
-    return res.json({ error: "Invalid refresh token" });
+    return res.status(401).json({ error: "Invalid refresh token" });
   }
 }
 

@@ -21,5 +21,5 @@ export function verifyTokenMiddleware(
     req.body.decodedtToken = payload;
     return next();
   }
-  return res.json({ error: "Authorization failed" });
+  return res.status(401).json({ error: "Authorization failed" });
 }
