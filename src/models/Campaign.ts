@@ -6,7 +6,7 @@ const campaignSchema = new Schema<ICampaign>({
   impressions: Number,
   leads: Number,
   affiliates: [{ type: Schema.Types.ObjectId, ref: "Affiliate" }],
-  clients: [{ type: Schema.Types.ObjectId, ref: "Affiliate" }],
+  client: [{ type: Schema.Types.ObjectId, ref: "Affiliate" }],
   price: Number,
   spend: Number,
   dateInit: String,
