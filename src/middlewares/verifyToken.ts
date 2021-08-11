@@ -13,7 +13,8 @@ export function verifyTokenMiddleware(
   res: Response,
   next: NextFunction
 ) {
-  const token = req.headers["x-access-token"];
+  //token in format "JWT token"
+  const token = req.headers.authorization?.split(" ")[1];
   const payload = token ? verifyToken(token as string) : false;
   console.log(token, payload);
 

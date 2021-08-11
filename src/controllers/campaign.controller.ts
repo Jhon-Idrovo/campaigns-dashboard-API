@@ -46,7 +46,9 @@ export async function readAll(req: Request, res: Response, next: NextFunction) {
   return res.status(200).json({ campaigns });
 }
 export async function readOne(req: Request, res: Response, next: NextFunction) {
-  const campaign = await Campaign.findById(req.params.campaignID);
+  const campaign = await Campaign.findById(req.params.campaignID)
+    .populate("client")
+    .populate("affiliates");
   return campaign
     ? res.json({ campaign })
     : res.status(400).json({ error: "Campaign not found" });
